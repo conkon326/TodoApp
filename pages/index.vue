@@ -1,10 +1,4 @@
-
 <template>
-  <div>
-    {{ counter.counter }}
-    <button @click="counter.counter++">button</button>
-    <NuxtLink to="page2">page2</NuxtLink>
-  </div>
   <div class="text-center">
     <h1>TODO管理アプリ</h1>
   </div>
@@ -92,15 +86,18 @@
       </div>
     </div>
   </div>
-
+  <div>
+    {{ counter.counter }}
+    <button @click="counter.counter++">button</button>
+    <NuxtLink to="page2">page2</NuxtLink>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { useCounterStore } from '~/stores/counter';
 import TaskModal from './TaskModal.vue';
 
-const counter = ref(useCounterStore().counter);
+const counter = useCounterStore();
 
 const board1Tasks = [
   { id: 1, title: "ボード 1 のタスク 1" },

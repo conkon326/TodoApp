@@ -7,9 +7,13 @@
           <label for="taskTitle">タスク名:</label>
           <input type="text" id="taskTitle" v-model="newTask.title" required>
         </div>
+        <div class="form-group">
+  <label for="taskTags">タグ:</label>
+  <input type="text" id="taskTags" v-model="newTask.tags">
+</div>
         <button type="submit">タスクを作成</button>
+        <button @click="closeModal">閉じる</button>
       </form>
-      <button @click="closeModal">閉じる</button>
     </div>
   </div>
 </template>
@@ -47,7 +51,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* 背景を半透明に */
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,5 +62,8 @@ export default {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
+  width: auto;
+  height: auto;
+
 }
 </style>

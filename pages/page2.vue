@@ -7,6 +7,8 @@ const counter = useCounterStore();
 <template>
   <div>
     {{ counter.counter }}
+    <button @click="counter.counter++">button</button>
+
   </div>
   <NuxtLink to="/">index</NuxtLink>
   
