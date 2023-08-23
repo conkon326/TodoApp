@@ -12,21 +12,12 @@
           <div class="card-body task-container">
             <!-- ボード 1 のタスク -->
             <div>
-              <draggable
-                v-model="board1Tasks"
-                item-key="no"
-                tag="ul"
-                group="ITEMS"
-                class="task"
-              >
-                <template #item="{ element, index }">
-                  <li>
-                    {{ element.title }}-{{ element.tag }}- (No.{{ element.no }})
-                  </li>
-                </template>
+              <draggable v-model="board1Tasks" item-key="task.id" tag="div">
+                <div v-for="task in board1Tasks" :key="task.id">
+                  {{ task.title }}
+                </div>
               </draggable>
             </div>
-
             <div class="d-grid gap-2">
               <button
                 @click="openModal(board1Tasks)"
@@ -46,19 +37,9 @@
         <div class="card">
           <div class="card-header">ボード 2</div>
           <div class="card-body task-container">
-            <draggable
-              class="task"
-              v-model="board2Tasks"
-              item-key="no"
-              tag="ul"
-              group="ITEMS"
-            >
-              <template #item="{ element, index }">
-                <li class="task">
-                  {{ element.title }}-{{ element.tag }}- (No.{{ element.no }})
-                </li>
-              </template>
-            </draggable>
+            <div class="task" v-for="task in board2Tasks" :key="task.id">
+              {{ task.title }}
+            </div>
             <div class="d-grid gap-2">
               <button
                 @click="openModal(board2Tasks)"
@@ -75,21 +56,11 @@
       <!-- ボード 3 -->
       <div class="col-3">
         <div class="card">
-          <div class="card-header">ボード 2</div>
+          <div class="card-header">ボード 3</div>
           <div class="card-body task-container">
-            <draggable
-              class="task"
-              v-model="board3Tasks"
-              item-key="no"
-              tag="ul"
-              group="ITEMS"
-            >
-              <template #item="{ element, index }">
-                <li class="task">
-                  {{ element.title }}-{{ element.tag }}- (No.{{ element.no }})
-                </li>
-              </template>
-            </draggable>
+            <div class="task" v-for="task in board3Tasks" :key="task.id">
+              {{ task.title }}
+            </div>
             <div class="d-grid gap-2">
               <button
                 @click="openModal(board3Tasks)"
@@ -106,21 +77,11 @@
       <!-- ボード 4 -->
       <div class="col-3">
         <div class="card">
-          <div class="card-header">ボード 2</div>
+          <div class="card-header">ボード 4</div>
           <div class="card-body task-container">
-            <draggable
-              class="task"
-              v-model="board4Tasks"
-              item-key="no"
-              tag="ul"
-              group="ITEMS"
-            >
-              <template #item="{ element, index }">
-                <li class="task">
-                  {{ element.title }}-{{ element.tag }}- (No.{{ element.no }})
-                </li>
-              </template>
-            </draggable>
+            <div class="task" v-for="task in board4Tasks" :key="task.id">
+              {{ task.title }}
+            </div>
             <div class="d-grid gap-2">
               <button
                 @click="openModal(board4Tasks)"
@@ -133,7 +94,6 @@
           </div>
         </div>
       </div>
-      <!-- ボードここまで -->
     </div>
   </div>
   <div>
@@ -142,20 +102,19 @@
 </template>
 
 <script setup>
-import draggable from "vuedraggable";
+import { draggable } from "vuedraggable";
 
-import { ref, computed } from "vue";
+import { ref, computed } from "vue"; // Vue 3のコンポーネントで使用
 
 // 仮のタスクデータ
 const board1Tasks = ref([
-  { no: 1, title: "タスク１", tag: "最重要", categoryNo: "1" },
-  { no: 2, title: "タスク２", tag: "なるはや", categoryNo: "2" },
-  { no: 3, title: "タスク３", tag: "それなり", categoryNo: "3" },
+  { id: 1, title: "ボード 1 のタスク 1" },
+  { id: 2, title: "ボード 1 のタスク 2" },
 ]);
 
 const board2Tasks = ref([
-  { no: 1, title: "タスク１", tag: "最重要", categoryNo: "1" },
-  { no: 2, title: "タスク２", tag: "なるはや", categoryNo: "2" },
+  { id: 1, title: "ボード 2 のタスク 1" },
+  { id: 2, title: "ボード 2 のタスク 2" },
 ]);
 
 const board3Tasks = ref([{ id: 1, title: "ボード 3 のタスク 1" }]);

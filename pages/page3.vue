@@ -27,9 +27,9 @@ import draggable from 'vuedraggable'
 import { ref } from 'vue';
 
 const board1Tasks = ref([
-  {board:1, no: 1, name: 'タスク１', tag: '最重要', categoryNo: '1'},
-  {board:1,no: 2, name: 'タスク２', tag: 'なるはや', categoryNo: '2'},
-  {board:1,no: 3, name: 'タスク３', tag: 'それなり', categoryNo: '3'}
+  {no: 1, name: 'タスク１', tag: '最重要', categoryNo: '1'},
+  {no: 2, name: 'タスク２', tag: 'なるはや', categoryNo: '2'},
+  {no: 3, name: 'タスク３', tag: 'それなり', categoryNo: '3'}
 ]);
 
 const board2Tasks = ref([

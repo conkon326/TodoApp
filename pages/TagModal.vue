@@ -7,13 +7,9 @@
           <label for="taskTitle">タスク名:</label>
           <input type="text" id="taskTitle" v-model="newTask.title" required>
         </div>
-        <div class="form-group">
-          <label for="taskTags">タグ:</label>
-          <input type="text" id="taskTags" v-model="newTask.tags">
-        </div>
         <button type="submit">タスクを作成</button>
-        <button @click="closeModal">閉じる</button>
       </form>
+      <button @click="closeModal">閉じる</button>
     </div>
   </div>
 </template>
@@ -26,48 +22,41 @@ export default {
   data() {
     return {
       newTask: {
-        title: '',
-        tags: '' // タグ情報を追加
+        title: ''
       }
     };
   },
   methods: {
     createTask() {
-      // タスクを作成するロジック
-      const task = {
-        title: this.newTask.title,
-        tags: this.newTask.tags
-      };
-      // ストアに新しいタスクを追加
-      this.$store.tasksStore.addTask(task);
-      // モーダルを閉じる
+      // タスクを作成するロジックをここに追加
       this.closeModal();
     },
     closeModal() {
-      this.$emit('close'); 
-      // 親コンポーネントに閉じるイベントを送信
+      this.$emit('close'); // 親コンポーネントに閉じるイベントを送信
     }
   }
 };
 </script>
 
-<style scoped>.modal {
+<style scoped>
+/* モーダルのスタイルをここで定義 */
+.modal {
+  /* モーダルが画面全体に覆いかぶさるスタイル */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7); /* 背景を半透明に */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
+  /* モーダルの内部コンテンツスタイル */
   background: #fff;
   padding: 20px;
   border-radius: 5px;
-  width: auto;
-  height: auto;
 }
 </style>
