@@ -1,60 +1,80 @@
 <template>
-  <div v-if="isModalOpen" class="modal">
+  <div>
+    <!-- <div v-if="isModalOpen" class="modal"> -->
     <div class="modal-content">
-      <h2>新しいタスクを作成</h2>
-      <form @submit.prevent="createTask">
+      <h2>新しいタグを作成</h2>
+      <form @submit.prevent="createTag">
         <div class="form-group">
-          <label for="taskTitle">タスク名:</label>
-          <input type="text" id="taskTitle" v-model="newTask.title" required>
+          <label for="tagTitle">タグ名:</label>
+          <input type="text" id="tagTitle" v-model="tagTitle" required>
         </div>
         <button type="submit">タスクを作成</button>
+        <button @click="closeModal">閉じる</button>
       </form>
-      <button @click="closeModal">閉じる</button>
     </div>
   </div>
+<!-- </div> -->
 </template>
 
 <script>
-export default {
-  props: {
-    isModalOpen: Boolean
-  },
+import { defineComponent } from 'vue';
+import { useTaskTags } from "~/stores/tags";
+
+export default defineComponent({
   data() {
     return {
-      newTask: {
-        title: ''
-      }
+      tagTitle: '',
+      isModalOpen: false,
     };
   },
   methods: {
-    createTask() {
-      // タスクを作成するロジックをここに追加
-      this.closeModal();
+    openModal() {
+      this.isModalOpen = true;
     },
     closeModal() {
-      this.$emit('close'); // 親コンポーネントに閉じるイベントを送信
-    }
-  }
-};
+      this.isModalOpen = false;
+    },
+    createTag() {
+      const TaskTags = useTaskTags();
+
+      const generateUniqueTagId = () => {
+        const currentTagCount = TaskTags.tags.length;
+        return currentTagCount + 1;
+      };
+
+      const newTag = {
+        tagId: generateUniqueTagId(),
+        tag: this.tagTitle,
+      };
+
+      TaskTags.addTag(newTag);
+
+      this.tagTitle = '';
+      this.closeModal();
+    },
+  },
+  computed: {
+    tagTags() {
+      // useTagTagsをここで呼び出す
+      return useTagTags();
+    },
+  },
+});
 </script>
 
 <style scoped>
-/* モーダルのスタイルをここで定義 */
 .modal {
-  /* モーダルが画面全体に覆いかぶさるスタイル */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* 背景を半透明に */
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
-  /* モーダルの内部コンテンツスタイル */
   background: #fff;
   padding: 20px;
   border-radius: 5px;

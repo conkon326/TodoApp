@@ -1,57 +1,97 @@
 <template>
-  <div v-if="isModalOpen" class="modal">
-    <div class="modal-content">
-      <h2>新しいタスクを作成</h2>
-      <form @submit.prevent="createTask">
-        <div class="form-group">
-          <label for="taskTitle">タスク名:</label>
-          <input type="text" id="taskTitle" v-model="newTask.title" required>
-        </div>
-        <div class="form-group">
-          <label for="taskTags">タグ:</label>
-          <input type="text" id="taskTags" v-model="newTask.tags">
-        </div>
-        <button type="submit">タスクを作成</button>
-        <button @click="closeModal">閉じる</button>
-      </form>
-    </div>
+
+  <div class="modal-content">
+    <h2>新しいタスクを作成</h2>
+    <form @submit.prevent="createTask">
+      <div class="form-group">
+        <label for="taskTitle">タスク名:</label>
+        <input type="text" id="taskTitle" v-model="taskTitle" required>
+      </div>
+      <div class="form-group">
+        <label for="taskTagsInput">タグ:</label>
+        <select
+          class="form-select"
+          multiple
+          v-model="selectedTags"
+        >
+          <option
+            v-for="tag in taskTags.tags"
+            :key="tag.tagId"
+            :value="tag.tagId"
+          >
+            {{ tag.tag }}
+          </option>
+        </select>
+      </div>
+      <button type="submit" @click="closeModal">タスクを作成</button>
+      <button @click="closeModal">閉じる</button>
+    </form>
   </div>
+
 </template>
 
 <script>
-export default {
-  props: {
-    isModalOpen: Boolean
-  },
+import { defineComponent } from 'vue';
+import { useBoard1Task, useBoard2Task, useBoard3Task, useBoard4Task } from "~/stores/tasks";
+import { useTaskTags } from "~/stores/tags";
+
+export default defineComponent({
   data() {
     return {
-      newTask: {
-        title: '',
-        tags: '' // タグ情報を追加
-      }
+      taskTitle: '',
+      selectedTags: [],
+      isModalOpen: false,
+      activeBoardTasks: null,
     };
   },
   methods: {
-    createTask() {
-      // タスクを作成するロジック
-      const task = {
-        title: this.newTask.title,
-        tags: this.newTask.tags
-      };
-      // ストアに新しいタスクを追加
-      this.$store.tasksStore.addTask(task);
-      // モーダルを閉じる
-      this.closeModal();
+    openModal(boardTasks) {
+      this.isModalOpen = true;
+      this.activeBoardTasks = boardTasks;
     },
     closeModal() {
-      this.$emit('close'); 
-      // 親コンポーネントに閉じるイベントを送信
-    }
-  }
-};
+      this.isModalOpen = false;
+    },
+    createTask() {
+      if (this.activeBoardTasks) {
+        const generateUniqueTaskId = () => {
+          const currentTaskCount = this.activeBoardTasks.tasks.length;
+          return currentTaskCount + 1;
+        };
+
+        const newTask = {
+          no: generateUniqueTaskId(),
+          title: this.taskTitle,
+          tagIds: this.selectedTags,
+          boardid: this.activeBoardTasks.boardId,
+        };
+        this.activeBoardTasks.addTask(newTask);
+        this.taskTitle = '';
+        this.selectedTags = [];
+        this.closeModal();
+      }
+    },
+  },
+  computed: {
+    taskTags() {
+      return useTaskTags();
+    },
+  },
+});
 </script>
 
-<style scoped>.modal {
+<style scoped>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0e0e0e;
+  opacity: 0.5;
+  z-index: 10000;
+}
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -62,12 +102,9 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
-  width: auto;
-  height: auto;
 }
 </style>
