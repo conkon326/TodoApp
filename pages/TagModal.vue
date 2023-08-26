@@ -1,42 +1,37 @@
 <template>
-  <div>
-    <!-- <div v-if="isModalOpen" class="modal"> -->
+  <div v-if="isModalOpen" class="modal">
     <div class="modal-content">
       <h2>新しいタグを作成</h2>
       <form @submit.prevent="createTag">
         <div class="form-group">
           <label for="tagTitle">タグ名:</label>
-          <input type="text" id="tagTitle" v-model="tagTitle" required>
+          <input type="text" id="tagTitle" v-model="tagTitle" required />
         </div>
-        <button type="submit">タスクを作成</button>
+        <button type="submit">タグを作成</button>
         <button @click="closeModal">閉じる</button>
       </form>
     </div>
   </div>
-<!-- </div> -->
 </template>
 
 <script>
-import { defineComponent } from 'vue';
 import { useTaskTags } from "~/stores/tags";
 
-export default defineComponent({
+export default {
+  props: {
+    isModalOpen: Boolean,
+  },
   data() {
     return {
-      tagTitle: '',
-      isModalOpen: false,
+      tagTitle: "",
     };
   },
   methods: {
-    openModal() {
-      this.isModalOpen = true;
-    },
     closeModal() {
-      this.isModalOpen = false;
+      this.$emit("close");
     },
     createTag() {
       const TaskTags = useTaskTags();
-
       const generateUniqueTagId = () => {
         const currentTagCount = TaskTags.tags.length;
         return currentTagCount + 1;
@@ -48,18 +43,11 @@ export default defineComponent({
       };
 
       TaskTags.addTag(newTag);
-
-      this.tagTitle = '';
+      this.tagTitle = "";
       this.closeModal();
     },
   },
-  computed: {
-    tagTags() {
-      // useTagTagsをここで呼び出す
-      return useTagTags();
-    },
-  },
-});
+};
 </script>
 
 <style scoped>
@@ -78,5 +66,6 @@ export default defineComponent({
   background: #fff;
   padding: 20px;
   border-radius: 5px;
+  width: auto;
 }
 </style>

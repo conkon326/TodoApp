@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 
-
 interface TaskObj {
   no: number;
   title: string;
@@ -14,11 +13,11 @@ export const useBoard1Task = defineStore('board1Task', {
   }),
   actions: {
     // タスクを削除するアクション
-    deleteTask(index) {
+    deleteTask(index:number) {
       this.tasks.splice(index, 1);
     },
     // タスクを追加するアクション
-    addTask(newTask) {
+    addTask(newTask: TaskObj) {
       this.tasks.push(newTask);
     }
   }
@@ -29,8 +28,11 @@ export const useBoard2Task = defineStore('board2Task', {
     tasks: [] as TaskObj[]
   }),
   actions: {
-    deleteTask(index) {
+    deleteTask(index:number) {
       this.tasks.splice(index, 1);
+    },
+    addTask(newTask: TaskObj) {
+      this.tasks.push(newTask);
     }
   }
 });
@@ -40,8 +42,11 @@ export const useBoard3Task = defineStore('board3Task', {
     tasks: [] as TaskObj[]
   }),
   actions: {
-    deleteTask(index) {
+    deleteTask(index:number) {
       this.tasks.splice(index, 1);
+    },
+    addTask(newTask: TaskObj) {
+      this.tasks.push(newTask);
     }
   }
 });
@@ -51,8 +56,11 @@ export const useBoard4Task = defineStore('board4Task', {
     tasks: [] as TaskObj[]
   }),
   actions: {
-    deleteTask(index) {
+    deleteTask(index:number) {
       this.tasks.splice(index, 1);
+    },
+    addTask(newTask: TaskObj) {
+      this.tasks.push(newTask);
     }
   }
 });
