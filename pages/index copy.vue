@@ -4,44 +4,48 @@
     <div class="row">
       <div class="col-9"></div>
       <div class="col-md-3">
-        <div class="accordion" id="tagFilterAccordion">
-          <div class="accordion-header" @click="toggleAccordion">
-            タグフィルター
-          </div>
-          <div v-if="isAccordionOpen" class="accordion-content">
-            <select class="form-select" v-model="selectedTags" multiple>
-              <option
-                v-for="tag in taskTags.tags"
-                :key="tag.tagId"
-                :value="tag.tagId"
-              >
-                {{ tag.tag }}
-              </option>
-            </select>
-            <div class="d-grid gap-2">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="filterTasksByTags"
-              >
-                絞り込む
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-9"></div>
-      <div class="d-grid gap-2 col-3">
+        
+      <div class="d-grid gap-2">
         <button
           type="button"
-          class="btn btn-outline-secondary"
-          @click="openModal('TagModal')"
+          class="btn btn-primary"
+          @click="filterTasksByTags"
         >
-          新しいタグを作成
+          タグフィルター
+        </button>
+      </div>
+      <select class="form-select" v-model="selectedTags" multiple>
+        <option
+          v-for="tag in taskTags.tags"
+          :key="tag.tagId"
+          :value="tag.tagId"
+        >
+          {{ tag.tag }}
+        </option>
+      </select>
+      <div class="d-grid gap-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          @click="filterTasksByTags"
+        >
+          絞り込む
         </button>
       </div>
     </div>
+
+    <div class="col-9"></div>
+      <div class="d-grid gap-2 col-3">
+        <button
+      type="button"
+      class="btn btn-outline-secondary"
+      @click="openModal('TagModal')"
+    >
+      新しいタグを作成
+    </button>
+      </div>
+    </div>
+
 
     <div class="row">
       <!-- ボード 1 -->
@@ -59,14 +63,9 @@
               <template #item="{ element, index }">
                 <div>
                   <div
-                    class="task"
-                    v-if="
-                      selectedTags.length === 0 ||
-                      selectedTags.some((tagId) =>
-                        element.tagIds.includes(tagId)
-                      )
-                    "
-                  >
+  class="task"
+  v-if="selectedTags.length === 0 || selectedTags.some(tagId => element.tagIds.includes(tagId))"
+>
                     <div class="task-title">{{ element.title }}</div>
                     <div
                       class="tag"
@@ -116,12 +115,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
-                      selectedTags.length === 0 ||
-                      selectedTags.some((tagId) =>
-                        element.tagIds.includes(tagId)
-                      )
-                    "
+                    v-if="!selectedTag || element.tagIds.includes(selectedTag)"
                   >
                     <div class="task-title">{{ element.title }}</div>
                     <div
@@ -171,12 +165,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
-                      selectedTags.length === 0 ||
-                      selectedTags.some((tagId) =>
-                        element.tagIds.includes(tagId)
-                      )
-                    "
+                    v-if="!selectedTag || element.tagIds.includes(selectedTag)"
                   >
                     <div class="task-title">{{ element.title }}</div>
                     <div
@@ -226,12 +215,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
-                      selectedTags.length === 0 ||
-                      selectedTags.some((tagId) =>
-                        element.tagIds.includes(tagId)
-                      )
-                    "
+                    v-if="!selectedTag || element.tagIds.includes(selectedTag)"
                   >
                     <div class="task-title">{{ element.title }}</div>
                     <div
@@ -340,37 +324,16 @@ const closeModal = (modalName) => {
   isModalOpen.value = false;
 };
 
-// アコーディオンの開閉
-const isAccordionOpen = ref(false);
-const toggleAccordion = () => {
-  isAccordionOpen.value = !isAccordionOpen.value;
-};
-// ボタンをクリックしたときにタスクをフィルタリングするメソッド
-const selectedTags = ref([]);
 
+const selectedTags = ref([]); 
+// ボタンをクリックしたときにタスクをフィルタリングするメソッド
 const filterTasksByTags = () => {
   if (selectedTags.value.length > 0) {
-    board1Task.tasks = board1Task.tasks.filter((task) =>
-      selectedTags.value.some((tagId) => task.tagIds.includes(tagId))
-    );
-  }
+    board1Task.tasks = board1Task.tasks.filter(task => selectedTags.value.some(tagId => task.tagIds.includes(tagId))); }
 };
 </script>
 
 <style>
-.accordion-header {
-  cursor: pointer;
-  border: 1px solid #ddd;
-  padding: 10px;
-  background-color: #f5f5f5;
-}
-
-.accordion-content {
-  border: 1px solid #ddd;
-  border-top: none;
-  padding: 10px;
-  background-color: #fff;
-}
 .task {
   border: 1px solid #ccc;
   padding: 10px;

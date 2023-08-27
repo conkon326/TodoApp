@@ -7,7 +7,6 @@
           <label for="taskTitle">タスク名:</label>
           <input type="text" id="taskTitle" v-model="taskTitle" required />
         </div>
-
         <div class="form-group">
           <label for="taskTagsInput">タグ:</label>
           <select class="form-select" multiple v-model="selectedTags">
@@ -38,6 +37,7 @@ export default {
     return {
       taskTitle: "",
       selectedTags: [],
+      tagTitle: "",
     };
   },
   methods: {
