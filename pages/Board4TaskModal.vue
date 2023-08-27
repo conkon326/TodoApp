@@ -2,14 +2,26 @@
   <div v-if="isModalOpen" class="modal">
     <div class="modal-content">
       <h2>ボード4の新しいタスクを作成</h2>
-      <form @submit.prevent="createTask()">
+      <form @submit.prevent="createTask()" class="needs-validation" novalidate>
         <div class="form-group">
-          <label for="taskTitle">タスク名:</label>
-          <input type="text" id="taskTitle" v-model="taskTitle" required />
+          <label for="taskTitle" class="form-label">タスク名:</label>
+          <input
+            type="text"
+            id="taskTitle"
+            v-model="taskTitle"
+            required
+            class="form-control"
+          />
+          <div class="invalid-feedback">タスク名は必須です。</div>
         </div>
         <div class="form-group">
-          <label for="taskTagsInput">タグ:</label>
-          <select class="form-select" multiple v-model="selectedTags">
+          <label for="taskTagsInput" class="form-label">タグ:</label>
+          <select
+            class="form-select"
+            multiple
+            v-model="selectedTags"
+            id="taskTagsInput"
+          >
             <option
               v-for="tag in taskTags.tags"
               :key="tag.tagId"
@@ -19,8 +31,8 @@
             </option>
           </select>
         </div>
-        <button type="submit">タスクを作成</button>
-        <button @click="closeModal">閉じる</button>
+        <button type="submit" class="btn btn-primary">タスクを作成</button>
+        <button @click="closeModal" class="btn btn-secondary">閉じる</button>
       </form>
     </div>
   </div>
@@ -29,7 +41,6 @@
 <script>
 import { useBoard4Task } from "~/stores/tasks";
 import { useTaskTags } from "~/stores/tags";
-
 export default {
   props: {
     isModalOpen: Boolean,
@@ -89,5 +100,15 @@ export default {
   padding: 20px;
   border-radius: 5px;
   width: auto;
+}
+#taskTitle {
+  margin-bottom: 10px;
+}
+
+#taskTagsInput {
+  margin-bottom: 10px;
+}
+.btn {
+  margin-right: 10px;
 }
 </style>

@@ -2,6 +2,7 @@
   <div class="container mt-5">
     <h1 class="text-center">TODO管理アプリ</h1>
     <div class="row">
+      <!-- フィルタリング -->
       <div class="col-9"></div>
       <div class="col-md-3">
         <div class="accordion" id="tagFilterAccordion">
@@ -9,7 +10,7 @@
             タグフィルター
           </div>
           <div v-if="isAccordionOpen" class="accordion-content">
-            <select class="form-select" v-model="selectedTags" multiple>
+            <select class="form-select" v-model="selectedTag" multiple>
               <option
                 v-for="tag in taskTags.tags"
                 :key="tag.tagId"
@@ -26,14 +27,11 @@
               >
                 絞り込む
               </button>
-              <button type="button" class="btn btn-danger" @click="resetFilter">
-                リセット
-              </button>
             </div>
           </div>
         </div>
       </div>
-
+      <!-- 新規タグ作成ボタン -->
       <div class="col-9"></div>
       <div class="d-grid gap-2 col-3">
         <button
@@ -63,7 +61,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
+                    v-show="
                       selectedTags.length === 0 ||
                       selectedTags.some((tagId) =>
                         element.tagIds.includes(tagId)
@@ -119,7 +117,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
+                    v-show="
                       selectedTags.length === 0 ||
                       selectedTags.some((tagId) =>
                         element.tagIds.includes(tagId)
@@ -159,6 +157,7 @@
           </div>
         </div>
       </div>
+
       <!-- ボード 3 -->
       <div class="col-3">
         <div class="card">
@@ -174,7 +173,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
+                    v-show="
                       selectedTags.length === 0 ||
                       selectedTags.some((tagId) =>
                         element.tagIds.includes(tagId)
@@ -214,6 +213,7 @@
           </div>
         </div>
       </div>
+
       <!-- ボード 4 -->
       <div class="col-3">
         <div class="card">
@@ -229,7 +229,7 @@
                 <div>
                   <div
                     class="task"
-                    v-if="
+                    v-show="
                       selectedTags.length === 0 ||
                       selectedTags.some((tagId) =>
                         element.tagIds.includes(tagId)
@@ -277,6 +277,7 @@
       v-if="activeModal === 'board1TaskModal'"
       @close="closeModal(board1TaskModal)"
     />
+
     <board2TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board2TaskModal'"
@@ -288,11 +289,13 @@
       v-if="activeModal === 'board3TaskModal'"
       @close="closeModal(board3TaskModal)"
     />
+
     <board4TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board4TaskModal'"
       @close="closeModal(board4TaskModal)"
     />
+
     <TagModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'TagModal'"
@@ -323,6 +326,7 @@ import board3TaskModal from "./Board3TaskModal.vue";
 import board4TaskModal from "./Board4TaskModal.vue";
 import TagModal from "./TagModal.vue";
 
+// タグ名取得
 const getTagName = (tagId: number) => {
   const matchingTag = taskTags.tags.find((tag) => tag.tagId === tagId);
   return matchingTag ? matchingTag.tag : "";
@@ -348,36 +352,12 @@ const isAccordionOpen = ref(false);
 const toggleAccordion = () => {
   isAccordionOpen.value = !isAccordionOpen.value;
 };
+
 // ボタンをクリックしたときにタスクをフィルタリング
-const selectedTags = ref([]);
-
+let selectedTag = ref([]);
+let selectedTags = ref([]);
 const filterTasksByTags = () => {
-  if (selectedTags.value.length > 0) {
-    const tagIdsToFilter = selectedTags.value;
-
-    [board1Task, board2Task, board3Task, board4Task].forEach((board) => {
-      board.tasks = board.tasks.filter((task) =>
-        tagIdsToFilter.some((tagId) => task.tagIds.includes(tagId))
-      );
-    });
-  }
-};
-// 各ボードの元のタスク一覧を保持
-const originalBoard1Tasks = ref([]);
-const originalBoard2Tasks = ref([]);
-const originalBoard3Tasks = ref([]);
-const originalBoard4Tasks = ref([]);
-originalBoard1Tasks.value = [...board1Task.tasks];
-originalBoard2Tasks.value = [...board2Task.tasks];
-originalBoard3Tasks.value = [...board3Task.tasks];
-originalBoard4Tasks.value = [...board4Task.tasks];
-
-const resetFilter = () => {
-  selectedTags.value = [];
-  board1Task.tasks = [...originalBoard1Tasks.value];
-  board2Task.tasks = [...originalBoard2Tasks.value];
-  board3Task.tasks = [...originalBoard3Tasks.value];
-  board4Task.tasks = [...originalBoard4Tasks.value];
+  selectedTags.value = selectedTag.value;
 };
 </script>
 
@@ -403,7 +383,7 @@ const resetFilter = () => {
 }
 
 .task-container {
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: auto;
 }
 
