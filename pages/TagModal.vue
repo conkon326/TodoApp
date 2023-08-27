@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useTaskTags } from "~/stores/tags";
 
 export default {

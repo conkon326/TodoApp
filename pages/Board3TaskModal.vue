@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useBoard3Task } from "~/stores/tasks";
 import { useTaskTags } from "~/stores/tags";
 export default {
