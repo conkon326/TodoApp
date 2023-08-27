@@ -271,35 +271,35 @@
       </div>
     </div>
     <!-- ボードここまで -->
-    <!-- モーダル -->
+    <!-- 各種モーダル -->
     <board1TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board1TaskModal'"
-      @close="closeModal(board1TaskModal)"
+      @close="closeModal()"
     />
 
     <board2TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board2TaskModal'"
-      @close="closeModal(board2TaskModal)"
+      @close="closeModal()"
     />
 
     <board3TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board3TaskModal'"
-      @close="closeModal(board3TaskModal)"
+      @close="closeModal()"
     />
 
     <board4TaskModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'board4TaskModal'"
-      @close="closeModal(board4TaskModal)"
+      @close="closeModal()"
     />
 
     <TagModal
       :isModalOpen="isModalOpen"
       v-if="activeModal === 'TagModal'"
-      @close="closeModal(TagModal)"
+      @close="closeModal()"
     />
   </div>
 </template>
@@ -337,13 +337,13 @@ const isModalOpen = ref(false);
 const activeModal = ref("");
 
 // モーダルを開く
-const openModal = (modalName) => {
+const openModal = (modalName: string) => {
   activeModal.value = modalName;
   isModalOpen.value = true;
 };
 
 // モーダルを閉じる
-const closeModal = (modalName) => {
+const closeModal = () => {
   isModalOpen.value = false;
 };
 
