@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-5">
+    <!-- アプリ名 -->
     <h1 class="text-center">TODO管理アプリ</h1>
     <div class="row">
       <!-- フィルタリング -->
@@ -31,7 +32,7 @@
           </div>
         </div>
       </div>
-      <!-- 新規タグ作成ボタン -->
+      <!-- 新規タグ作成フォーム用ボタン -->
       <div class="col-9"></div>
       <div class="d-grid gap-2 col-3">
         <button
@@ -77,6 +78,7 @@
                       {{ getTagName(tagId) }}
                     </div>
                     <div class="del">
+                      <!-- タスク削除ボタン -->
                       <button
                         type="button"
                         class="btn btn-danger"
@@ -89,6 +91,7 @@
                 </div>
               </template>
             </draggable>
+            <!-- 新規タスク作成フォーム用ボタン -->
             <div class="d-grid gap-2">
               <button
                 type="button"
@@ -132,6 +135,7 @@
                     >
                       {{ getTagName(tagId) }}
                     </div>
+                    <!-- タスク削除ボタン -->
                     <div class="del">
                       <button
                         type="button"
@@ -146,6 +150,7 @@
               </template>
             </draggable>
             <div class="d-grid gap-2">
+              <!-- 新規タスク作成フォーム用ボタン -->
               <button
                 type="button"
                 class="btn btn-outline-secondary"
@@ -188,6 +193,8 @@
                     >
                       {{ getTagName(tagId) }}
                     </div>
+                    <!-- タスク削除ボタン -->
+
                     <div class="del">
                       <button
                         type="button"
@@ -202,6 +209,8 @@
               </template>
             </draggable>
             <div class="d-grid gap-2">
+              <!-- 新規タスク作成フォーム用ボタン -->
+
               <button
                 type="button"
                 class="btn btn-outline-secondary"
@@ -244,6 +253,7 @@
                     >
                       {{ getTagName(tagId) }}
                     </div>
+                    <!-- タスク削除ボタン -->
                     <div class="del">
                       <button
                         type="button"
@@ -257,6 +267,7 @@
                 </div>
               </template>
             </draggable>
+            <!-- 新規タスク作成フォーム用ボタン -->
             <div class="d-grid gap-2">
               <button
                 type="button"
@@ -271,6 +282,7 @@
       </div>
     </div>
     <!-- ボードここまで -->
+    <div></div>
     <!-- 各種モーダル -->
     <board1TaskModal
       :isModalOpen="isModalOpen"
@@ -306,6 +318,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
+// ドラッグ＆ドロップコンポーネントライブラリ
+import draggable from "vuedraggable";
+
+// ストア
 import {
   useBoard1Task,
   useBoard2Task,
@@ -319,7 +336,7 @@ const board4Task = useBoard4Task();
 import { useTaskTags } from "~/stores/tags";
 const taskTags = useTaskTags();
 
-import draggable from "vuedraggable";
+// モーダル
 import board1TaskModal from "./Board1TaskModal.vue";
 import board2TaskModal from "./Board2TaskModal.vue";
 import board3TaskModal from "./Board3TaskModal.vue";
@@ -347,13 +364,13 @@ const closeModal = () => {
   isModalOpen.value = false;
 };
 
-// アコーディオンの開閉
+// アコーディオンの開閉管理
 const isAccordionOpen = ref(false);
 const toggleAccordion = () => {
   isAccordionOpen.value = !isAccordionOpen.value;
 };
 
-// ボタンをクリックしたときにタスクをフィルタリング
+// ボタンをクリックしたときにタスクをタグでフィルタリング
 let selectedTag = ref([]);
 let selectedTags = ref([]);
 const filterTasksByTags = () => {
@@ -362,19 +379,21 @@ const filterTasksByTags = () => {
 </script>
 
 <style>
+/* アコーディオンメニュ */
 .accordion-header {
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 10px;
   background-color: #f5f5f5;
 }
-
 .accordion-content {
   border: 1px solid #ddd;
   border-top: none;
   padding: 10px;
   background-color: #fff;
 }
+
+/* タスク */
 .task {
   border: 1px solid #ccc;
   padding: 10px;
@@ -393,6 +412,7 @@ const filterTasksByTags = () => {
   position: relative;
 }
 
+/* タグ */
 .tag {
   background-color: #007bff;
   color: #fff;

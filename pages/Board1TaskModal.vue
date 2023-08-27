@@ -1,7 +1,9 @@
 <template>
+  <!-- モーダルが開いている場合に表示 -->
   <div v-if="isModalOpen" class="modal">
     <div class="modal-content">
       <h2>ボード1の新しいタスクを作成</h2>
+      <!-- タスク作成フォーム -->
       <form @submit.prevent="createTask()" class="needs-validation" novalidate>
         <div class="form-group">
           <label for="taskTitle" class="form-label">タスク名:</label>
@@ -12,8 +14,9 @@
             required
             class="form-control"
           />
-          <div class="invalid-feedback">タスク名は必須です。</div>
+          <div class="invalid-feedback">タスク名を入力してください</div>
         </div>
+        <!-- タグ選択ボタン -->
         <div class="form-group">
           <label for="taskTagsInput" class="form-label">タグ:</label>
           <select
@@ -31,7 +34,9 @@
             </option>
           </select>
         </div>
+        <!-- タスク作成ボタン -->
         <button type="submit" class="btn btn-primary">タスクを作成</button>
+        <!-- モーダルを閉じるボタン -->
         <button @click="closeModal" class="btn btn-secondary">閉じる</button>
       </form>
     </div>
@@ -52,29 +57,34 @@ export default {
     };
   },
   methods: {
+    // モーダルを閉じるメソッド
     closeModal() {
       this.$emit("close");
     },
+    // タスクを作成するメソッド
     createTask() {
       const board1Task = useBoard1Task();
+      // 一意タスクIDを作成するメソッド
       const generateUniqueTaskId = () => {
         const currentTaskCount = board1Task.tasks.length;
         return currentTaskCount + 1;
       };
-
+      // 新しいタスクオブジェクトを作成
       const newTask = {
         no: generateUniqueTaskId(),
         title: this.taskTitle,
         tagIds: this.selectedTags,
         boardid: 1,
       };
-
+      // ストアにタスクを追加
       board1Task.addTask(newTask);
+      // 入力フィールドをクリアし、モーダルを閉じる
       this.taskTitle = "";
       this.selectedTags = [];
       this.closeModal();
     },
   },
+  //タグ名を取得
   computed: {
     taskTags() {
       return useTaskTags();
@@ -84,6 +94,8 @@ export default {
 </script>
 
 <style scoped>
+/* モーダル背景 */
+
 .modal {
   position: fixed;
   top: 0;
@@ -95,6 +107,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+/* モーダル */
 .modal-content {
   background: #fff;
   padding: 20px;
