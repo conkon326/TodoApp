@@ -26,6 +26,9 @@
               >
                 絞り込む
               </button>
+              <button type="button" class="btn btn-danger" @click="resetFilter">
+                リセット
+              </button>
             </div>
           </div>
         </div>
@@ -345,15 +348,36 @@ const isAccordionOpen = ref(false);
 const toggleAccordion = () => {
   isAccordionOpen.value = !isAccordionOpen.value;
 };
-// ボタンをクリックしたときにタスクをフィルタリングするメソッド
+// ボタンをクリックしたときにタスクをフィルタリング
 const selectedTags = ref([]);
 
 const filterTasksByTags = () => {
   if (selectedTags.value.length > 0) {
-    board1Task.tasks = board1Task.tasks.filter((task) =>
-      selectedTags.value.some((tagId) => task.tagIds.includes(tagId))
-    );
+    const tagIdsToFilter = selectedTags.value;
+
+    [board1Task, board2Task, board3Task, board4Task].forEach((board) => {
+      board.tasks = board.tasks.filter((task) =>
+        tagIdsToFilter.some((tagId) => task.tagIds.includes(tagId))
+      );
+    });
   }
+};
+// 各ボードの元のタスク一覧を保持
+const originalBoard1Tasks = ref([]);
+const originalBoard2Tasks = ref([]);
+const originalBoard3Tasks = ref([]);
+const originalBoard4Tasks = ref([]);
+originalBoard1Tasks.value = [...board1Task.tasks];
+originalBoard2Tasks.value = [...board2Task.tasks];
+originalBoard3Tasks.value = [...board3Task.tasks];
+originalBoard4Tasks.value = [...board4Task.tasks];
+
+const resetFilter = () => {
+  selectedTags.value = [];
+  board1Task.tasks = [...originalBoard1Tasks.value];
+  board2Task.tasks = [...originalBoard2Tasks.value];
+  board3Task.tasks = [...originalBoard3Tasks.value];
+  board4Task.tasks = [...originalBoard4Tasks.value];
 };
 </script>
 
