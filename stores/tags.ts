@@ -11,11 +11,11 @@ export const useTaskTags = defineStore('taskTags', {
   }),
   actions: {
     // タグを削除するアクション
-    deleteTag(index) {
+    deleteTag(index:number) {
       this.tags.splice(index, 1);
     },
     // タグを追加するアクション
-    addTag(newTag) {
+    addTag(newTag: TagObj) {
       this.tags.push(newTag);
     }
   }
