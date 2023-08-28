@@ -4,7 +4,11 @@
       <h2>ボード4の新しいタスクを作成</h2>
       <form @submit.prevent="createTask()" class="needs-validation" novalidate>
         <div class="form-group">
-          <label for="taskTitle" class="form-label">タスク名:</label>
+          <label for="taskTitle" class="form-label"
+            >タスク名:
+            <span class="form-text">
+              <span class="required-marker">※</span>必須項目です</span>
+          </label>
           <input
             type="text"
             id="taskTitle"
@@ -13,10 +17,13 @@
             placeholder="タスク名を入力してください"
             required
           />
+
           <div class="invalid-feedback">タスク名は必須です。</div>
         </div>
         <div class="form-group">
-          <label for="taskTagsInput" class="form-label">タグ:</label>
+          <label for="taskTagsInput" class="form-label"
+            >タグ:<span class="form-text">タグは複数選択可能です</span>
+            </label>
           <select
             class="form-select"
             multiple
@@ -106,6 +113,10 @@ export default {
   border-radius: 5px;
   width: auto;
 }
+.required-marker {
+  color: red;
+}
+
 #taskTitle {
   margin-bottom: 10px;
 }
@@ -113,6 +124,7 @@ export default {
 #taskTagsInput {
   margin-bottom: 10px;
 }
+
 .btn {
   margin-right: 10px;
 }

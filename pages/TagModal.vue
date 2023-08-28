@@ -6,7 +6,8 @@
       <!-- タグ作成フォーム -->
       <form @submit.prevent="createTag" class="needs-validation" novalidate>
         <div class="form-group">
-          <label for="tagTitle">タグ名:</label>
+          <label for="tagTitle">タグ名:  <span class="form-text">
+              <span class="required-marker">※</span>必須項目です</span></label>
           <input
             type="text"
             id="tagTitle"
@@ -15,7 +16,7 @@
             placeholder="タグ名を入力してください"
             required
           />
-          <div class="invalid-feedback">タスク名は必須です。</div>
+          <div class="invalid-feedback">タグ名は必須です。</div>
         </div>
         <!-- タグ作成ボタン -->
         <button type="submit" class="btn btn-primary">タグを作成</button>
@@ -84,12 +85,18 @@ export default {
   align-items: center;
 }
 /* モーダル */
-
+.required-marker {
+  color: red;
+}
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
   width: auto;
+}
+
+.required-marker {
+  color: red;
 }
 #tagTitle {
   margin-bottom: 10px;
