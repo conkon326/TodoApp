@@ -7,12 +7,13 @@
       <form @submit.prevent="createTask()" class="needs-validation" novalidate>
         <div class="form-group">
           <label for="taskTitle" class="form-label">タスク名:</label>
-          <input
+           <input
             type="text"
             id="taskTitle"
             v-model="taskTitle"
-            required
             class="form-control"
+            placeholder="タスク名を入力してください"
+            required
           />
           <div class="invalid-feedback">タスク名を入力してください</div>
         </div>
@@ -63,6 +64,10 @@ export default {
     },
     // タスクを作成するメソッド
     createTask() {
+      if (this.taskTitle.trim() === "") {
+        // タグ名が空の場合は何もしない
+        return;
+      }
       const board1Task = useBoard1Task();
       // 一意タスクIDを作成するメソッド
       const generateUniqueTaskId = () => {

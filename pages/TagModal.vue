@@ -4,15 +4,23 @@
     <div class="modal-content">
       <h2>新しいタグを作成</h2>
       <!-- タグ作成フォーム -->
-      <form @submit.prevent="createTag">
+      <form @submit.prevent="createTag" class="needs-validation" novalidate>
         <div class="form-group">
           <label for="tagTitle">タグ名:</label>
-          <input type="text" id="tagTitle" v-model="tagTitle" required />
+          <input
+            type="text"
+            id="tagTitle"
+            v-model="tagTitle"
+            class="form-control"
+            placeholder="タグ名を入力してください"
+            required
+          />
+          <div class="invalid-feedback">タスク名は必須です。</div>
         </div>
         <!-- タグ作成ボタン -->
-        <button type="submit">タグを作成</button>
+        <button type="submit" class="btn btn-primary">タグを作成</button>
         <!-- モーダルを閉じるボタン -->
-        <button @click="closeModal">閉じる</button>
+        <button @click="closeModal" class="btn btn-secondary">閉じる</button>
       </form>
     </div>
   </div>
@@ -37,6 +45,10 @@ export default {
     },
     // タグを作成するメソッド
     createTag() {
+      if (this.tagTitle.trim() === "") {
+        // タグ名が空の場合は何もしない
+        return;
+      }
       const TaskTags = useTaskTags();
       // 一意のタグIDを生成する関数
       const generateUniqueTagId = () => {
@@ -78,5 +90,11 @@ export default {
   padding: 20px;
   border-radius: 5px;
   width: auto;
+}
+#tagTitle {
+  margin-bottom: 10px;
+}
+.btn {
+  margin-right: 10px;
 }
 </style>

@@ -5,12 +5,13 @@
       <form @submit.prevent="createTask()" class="needs-validation" novalidate>
         <div class="form-group">
           <label for="taskTitle" class="form-label">タスク名:</label>
-          <input
+           <input
             type="text"
             id="taskTitle"
             v-model="taskTitle"
             required
             class="form-control"
+            placeholder="タスク名を入力してください"
           />
           <div class="invalid-feedback">タスク名は必須です。</div>
         </div>
@@ -56,6 +57,9 @@ export default {
       this.$emit("close");
     },
     createTask() {
+      if (this.taskTitle.trim() === "") {
+        return;
+      }
       const board3Task = useBoard3Task();
       const generateUniqueTaskId = () => {
         const currentTaskCount = board3Task.tasks.length;

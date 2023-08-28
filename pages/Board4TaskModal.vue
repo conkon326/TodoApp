@@ -9,8 +9,9 @@
             type="text"
             id="taskTitle"
             v-model="taskTitle"
-            required
             class="form-control"
+            placeholder="タスク名を入力してください"
+            required
           />
           <div class="invalid-feedback">タスク名は必須です。</div>
         </div>
@@ -56,6 +57,10 @@ export default {
       this.$emit("close");
     },
     createTask() {
+      if (this.taskTitle.trim() === "") {
+        // タグ名が空の場合は何もしない
+        return;
+      }
       const board4Task = useBoard4Task();
       const generateUniqueTaskId = () => {
         const currentTaskCount = board4Task.tasks.length;
