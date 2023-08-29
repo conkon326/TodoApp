@@ -2,7 +2,7 @@
   <div v-if="isModalOpen" class="modal">
     <div class="modal-content">
       <h2>ボード2の新しいタスクを作成</h2>
-      <form @submit.prevent="createTask()" class="needs-validation" novalidate>
+      <form @submit.prevent="createTask()" class="needs-validation">
         <div class="form-group">
            <label for="taskTitle" class="form-label"
             >タスク名:

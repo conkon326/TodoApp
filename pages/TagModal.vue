@@ -4,7 +4,7 @@
     <div class="modal-content">
       <h2>新しいタグを作成</h2>
       <!-- タグ作成フォーム -->
-      <form @submit.prevent="createTag" class="needs-validation" novalidate>
+      <form @submit.prevent="createTag" class="needs-validation">
         <div class="form-group">
           <label for="tagTitle">タグ名:  <span class="form-text">
               <span class="required-marker">※</span>必須項目です</span></label>
