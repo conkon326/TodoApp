@@ -4,7 +4,7 @@
     <div class="modal-content">
       <h2>ボード1の新しいタスクを作成</h2>
       <!-- タスク作成フォーム -->
-      <form @submit.prevent="createTask()" class="needs-validation" novalidate>
+      <form @submit.prevent="createTask()" class="needs-validation">
         <div class="form-group">
            <label for="taskTitle" class="form-label"
             >タスク名:
