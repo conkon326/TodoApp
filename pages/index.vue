@@ -337,11 +337,11 @@ import { useTaskTags } from "~/stores/tags";
 const taskTags = useTaskTags();
 
 // モーダル
-import board1TaskModal from "./Board1TaskModal.vue";
-import board2TaskModal from "./Board2TaskModal.vue";
-import board3TaskModal from "./Board3TaskModal.vue";
-import board4TaskModal from "./Board4TaskModal.vue";
-import TagModal from "./TagModal.vue";
+import board1TaskModal from "~/modal/Board1TaskModal.vue";
+import board2TaskModal from "~/modal/Board2TaskModal.vue";
+import board3TaskModal from "~/modal/Board3TaskModal.vue";
+import board4TaskModal from "~/modal/Board4TaskModal.vue";
+import TagModal from "~/modal/TagModal.vue";
 
 // タグ名取得
 const getTagName = (tagId: number) => {
